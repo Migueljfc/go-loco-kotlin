@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "144034042193",
+    "project_id": "go-loco-fe08c",
+    "storage_bucket": "go-loco-fe08c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144034042193:android:ab5bfeca210ea261b00370",
+        "android_client_info": {
+          "package_name": "com.google.firebase.goloco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144034042193-u0cp47qcncnpmd13dkepal5noof0vh26.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.firebase.goloco",
+            "certificate_hash": "c8d534c5d2b6310f4480acf1b33d07bd91a43ad7"
+          }
+        },
+        {
+          "client_id": "144034042193-tjj1v3gm4pcjnnsn72mc2tgfhisa6dd9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmBiuczpulndOAnjPcxoaHc2BmQgdWBf8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144034042193-tjj1v3gm4pcjnnsn72mc2tgfhisa6dd9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
