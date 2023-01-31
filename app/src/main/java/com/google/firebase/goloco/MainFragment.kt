@@ -2,7 +2,13 @@ package com.google.firebase.goloco
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.*
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -22,23 +28,23 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.goloco.adapter.LocalAdapter
 import com.google.firebase.goloco.databinding.FragmentMainBinding
+import com.google.firebase.goloco.model.Local
+import com.google.firebase.goloco.util.LocalUtil
 import com.google.firebase.goloco.viewmodel.MainActivityViewModel
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.goloco.adapter.RestaurantAdapter
-import com.google.firebase.goloco.model.Restaurant
-import com.google.firebase.goloco.util.RestaurantUtil
 
 class MainFragment : Fragment(),
     FilterDialogFragment.FilterListener,
-    RestaurantAdapter.OnRestaurantSelectedListener {
+    LocalAdapter.OnLocalSelectedListener {
 
     lateinit var firestore: FirebaseFirestore
     private var query: Query? = null
 
     private lateinit var binding: FragmentMainBinding
     private lateinit var filterDialog: FilterDialogFragment
-    private var adapter: RestaurantAdapter? = null
+    private var adapter: LocalAdapter? = null
 
     private lateinit var viewModel: MainActivityViewModel
     private val signInLauncher = registerForActivityResult(
@@ -60,8 +66,8 @@ class MainFragment : Fragment(),
         // Firestore
         firestore = Firebase.firestore
 
-        // Get the 50 highest rated restaurants
-        query = firestore.collection("restaurants")
+        // Get the 50 highest rated locals
+        query = firestore.collection("locals")
             .orderBy("avgRating", Query.Direction.DESCENDING)
             .limit(LIMIT.toLong())
 
@@ -76,14 +82,14 @@ class MainFragment : Fragment(),
 
         // RecyclerView
         query?.let {
-            adapter = object : RestaurantAdapter(it, this@MainFragment) {
+            adapter = object : LocalAdapter(it, this@MainFragment) {
                 override fun onDataChanged() {
                     // Show/hide content if the query returns empty.
                     if (itemCount == 0) {
-                        binding.recyclerRestaurants.visibility = View.GONE
+                        binding.recyclerLocals.visibility = View.GONE
                         binding.viewEmpty.visibility = View.VISIBLE
                     } else {
-                        binding.recyclerRestaurants.visibility = View.VISIBLE
+                        binding.recyclerLocals.visibility = View.VISIBLE
                         binding.viewEmpty.visibility = View.GONE
                     }
                 }
@@ -96,10 +102,10 @@ class MainFragment : Fragment(),
                     ).show()
                 }
             }
-            binding.recyclerRestaurants.adapter = adapter
+            binding.recyclerLocals.adapter = adapter
         }
 
-        binding.recyclerRestaurants.layoutManager = LinearLayoutManager(context)
+        binding.recyclerLocals.layoutManager = LinearLayoutManager(context)
 
         // Filter Dialog
         filterDialog = FilterDialogFragment()
@@ -172,31 +178,31 @@ class MainFragment : Fragment(),
         onFilter(Filters.default)
     }
 
-    override fun onRestaurantSelected(restaurant: DocumentSnapshot) {
-        // Go to the details page for the selected restaurant
+    override fun onLocalSelected(local: DocumentSnapshot) {
+        // Go to the details page for the selected local
         val action = MainFragmentDirections
-            .actionMainFragmentToRestaurantDetailFragment(restaurant.id)
+            .actionMainFragmentToLocalDetailFragment(local.id)
 
         findNavController().navigate(action)
     }
 
     override fun onFilter(filters: Filters) {
         // Construct query basic query
-        var query: Query = firestore.collection("restaurants")
+        var query: Query = firestore.collection("locals")
 
         // Category (equality filter)
         if (filters.hasCategory()) {
-            query = query.whereEqualTo(Restaurant.FIELD_CATEGORY, filters.category)
+            query = query.whereEqualTo(Local.FIELD_CATEGORY, filters.category)
         }
 
         // City (equality filter)
         if (filters.hasCity()) {
-            query = query.whereEqualTo(Restaurant.FIELD_CITY, filters.city)
+            query = query.whereEqualTo(Local.FIELD_CITY, filters.city)
         }
 
         // Price (equality filter)
         if (filters.hasPrice()) {
-            query = query.whereEqualTo(Restaurant.FIELD_PRICE, filters.price)
+            query = query.whereEqualTo(Local.FIELD_LAT, filters.price)
         }
 
         // Sort by (orderBy with direction)
@@ -237,13 +243,14 @@ class MainFragment : Fragment(),
     }
 
     private fun onAddItemsClicked() {
-        val restaurantsRef = firestore.collection("restaurants")
-        for (i in 0..9) {
-            // Create random restaurant / ratings
-            val randomRestaurant = RestaurantUtil.getRandom(requireContext())
+        Log.d("OAIC", "onAddItemsClicked")
+        val localsRef = firestore.collection("locals")
+        for (i in 0..12) {
+            // Create random local / ratings
+            val randomLocal = LocalUtil.getRandom(requireContext())
 
-            // Add restaurant
-            restaurantsRef.add(randomRestaurant)
+            // Add local
+            localsRef.add(randomLocal)
         }
     }
 

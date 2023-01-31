@@ -19,7 +19,7 @@ object RatingUtil {
             "I was fed, so that's something.",
 
             // 3 - 4 stars
-            "This was a nice meal, I'd go back.",
+            "This was a nice, I'd go back.",
 
             // 4 - 5 stars
             "This was fantastic!  Best ever!")

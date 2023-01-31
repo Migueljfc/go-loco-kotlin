@@ -32,8 +32,8 @@ class RatingDialogFragment : DialogFragment() {
     ): View? {
         _binding = DialogRatingBinding.inflate(inflater, container, false)
 
-        binding.restaurantFormButton.setOnClickListener { onSubmitClicked() }
-        binding.restaurantFormCancel.setOnClickListener { onCancelClicked() }
+        binding.localFormButton.setOnClickListener { onSubmitClicked() }
+        binding.localFormCancel.setOnClickListener { onCancelClicked() }
 
         return binding.root
     }
@@ -63,8 +63,8 @@ class RatingDialogFragment : DialogFragment() {
         user?.let {
             val rating = Rating(
                     it,
-                    binding.restaurantFormRating.rating.toDouble(),
-                    binding.restaurantFormText.text.toString())
+                    binding.localFormRating.rating.toDouble(),
+                    binding.localFormText.text.toString())
 
             ratingListener?.onRating(rating)
         }

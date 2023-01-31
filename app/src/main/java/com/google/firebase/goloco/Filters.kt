@@ -3,8 +3,8 @@ package com.google.firebase.goloco
 import android.content.Context
 import android.text.TextUtils
 import com.google.firebase.firestore.Query
-import com.google.firebase.goloco.model.Restaurant
-import com.google.firebase.goloco.util.RestaurantUtil
+import com.google.firebase.goloco.model.Local
+import com.google.firebase.goloco.util.LocalUtil
 
 /**
  * Object for passing filters around.
@@ -14,6 +14,8 @@ class Filters {
     var category: String? = null
     var city: String? = null
     var price = -1
+    var lat = 0.0
+    var lon = 0.0
     var sortBy: String? = null
     var sortDirection: Query.Direction = Query.Direction.DESCENDING
 
@@ -61,7 +63,7 @@ class Filters {
         if (price > 0) {
             desc.append(" for ")
             desc.append("<b>")
-            desc.append(RestaurantUtil.getPriceString(price))
+            desc.append(LocalUtil.getCoordinatesString(lat,lon))
             desc.append("</b>")
         }
 
@@ -70,8 +72,8 @@ class Filters {
 
     fun getOrderDescription(context: Context): String {
         return when (sortBy) {
-            Restaurant.FIELD_PRICE -> context.getString(R.string.sorted_by_price)
-            Restaurant.FIELD_POPULARITY -> context.getString(R.string.sorted_by_popularity)
+            Local.FIELD_LAT -> context.getString(R.string.sorted_by_distance)
+            Local.FIELD_POPULARITY -> context.getString(R.string.sorted_by_popularity)
             else -> context.getString(R.string.sorted_by_rating)
         }
     }
@@ -81,7 +83,7 @@ class Filters {
         val default: Filters
             get() {
                 val filters = Filters()
-                filters.sortBy = Restaurant.FIELD_AVG_RATING
+                filters.sortBy = Local.FIELD_AVG_RATING
                 filters.sortDirection = Query.Direction.DESCENDING
 
                 return filters

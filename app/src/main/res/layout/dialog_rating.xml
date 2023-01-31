@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <me.zhanghai.android.materialratingbar.MaterialRatingBar
-        android:id="@+id/restaurantFormRating"
+        android:id="@+id/localFormRating"
         style="@style/Widget.MaterialRatingBar.RatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,14 +29,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/restaurantFormText"
+        android:id="@+id/localFormText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:hint="@string/hint_review"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/restaurantFormRating" />
+        app:layout_constraintTop_toBottomOf="@+id/localFormRating" />
 
 
     <View
@@ -44,35 +44,35 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/restaurantFormCancel"
-        app:layout_constraintEnd_toStartOf="@+id/restaurantFormCancel"
+        app:layout_constraintBottom_toBottomOf="@+id/localFormCancel"
+        app:layout_constraintEnd_toStartOf="@+id/localFormCancel"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/restaurantFormCancel" />
+        app:layout_constraintTop_toTopOf="@+id/localFormCancel" />
 
     <Button
-        android:id="@+id/restaurantFormCancel"
+        android:id="@+id/localFormCancel"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/cancel"
         android:textColor="@color/greySecondary"
         android:theme="@style/ThemeOverlay.FilterButton"
-        app:layout_constraintEnd_toStartOf="@+id/restaurantFormButton"
+        app:layout_constraintEnd_toStartOf="@+id/localFormButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/view3"
-        app:layout_constraintTop_toTopOf="@+id/restaurantFormButton" />
+        app:layout_constraintTop_toTopOf="@+id/localFormButton" />
 
 
     <Button
-        android:id="@+id/restaurantFormButton"
+        android:id="@+id/localFormButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/submit"
         android:theme="@style/ThemeOverlay.FilterButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/restaurantFormCancel"
-        app:layout_constraintTop_toBottomOf="@+id/restaurantFormText" />
+        app:layout_constraintStart_toEndOf="@+id/localFormCancel"
+        app:layout_constraintTop_toBottomOf="@+id/localFormText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

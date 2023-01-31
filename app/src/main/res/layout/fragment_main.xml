@@ -90,9 +90,9 @@
 
     </FrameLayout>
 
-    <!-- Main Restaurants recycler -->
+    <!-- Main Locals recycler -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerRestaurants"
+        android:id="@+id/recyclerLocals"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@android:color/white"
@@ -100,7 +100,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filterBarContainer"
-        tools:listitem="@layout/item_restaurant" />
+        tools:listitem="@layout/item_local" />
 
     <!-- Shadow below toolbar -->
     <View
@@ -145,10 +145,10 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerRestaurants"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerLocals"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recyclerRestaurants"
+        app:layout_constraintTop_toTopOf="@+id/recyclerLocals"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

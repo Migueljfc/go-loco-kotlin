@@ -5,9 +5,9 @@
     <string name="value_any_city">Anywhere</string>
     <string name="value_any_price">Any Distance</string>
 
-    <string name="price_1"> less than 2km</string>
-    <string name="price_2"> less than 5km</string>
-    <string name="price_3"> less than 10km</string>
+    <string name="distance_1"> ‹ 2km</string>
+    <string name="distance_2"> ‹ 5km</string>
+    <string name="distance_3"> ‹ 10km</string>
 
     <string name="fmt_num_ratings" translatable="false">(%d)</string>
     <string name="all_locations">All Locations</string>
@@ -15,10 +15,10 @@
 
     <string name="sort_by_rating">Sort by Rating</string>
     <string name="sort_by_popularity">Sort by Popularity</string>
-    <string name="sort_by_price">Sort by Price</string>
+    <string name="sort_by_distance">Sort by Distance</string>
 
     <string name="sorted_by_rating">sorted by rating</string>
-    <string name="sorted_by_price">sorted by price</string>
+    <string name="sorted_by_distance">sorted by distance</string>
     <string name="sorted_by_popularity">sorted by distance</string>
 
     <string name="add_random_items">Add Random Items</string>
@@ -42,18 +42,16 @@
     <string-array name="categories">
         <item>@string/value_any_category</item>
 
-        <item>Monument</item>
+        <item>Street</item>
         <item>Church</item>
         <item>Bar</item>
         <item>Bridge</item>
-        <item>Garden</item>
         <item>Park</item>
         <item>Museum</item>
         <item>Statue</item>
-        <item>Store</item>
         <item>Building</item>
         <item>Restaurant</item>
-        <item>Undefined</item>
+        <item>Others</item>
     </string-array>
 
     <!-- 50 most populous cities in the US -->
@@ -113,15 +111,15 @@
     <string-array name="prices">
         <item>@string/value_any_price</item>
 
-        <item>@string/price_1</item>
-        <item>@string/price_2</item>
-        <item>@string/price_3</item>
+        <item>@string/distance_1</item>
+        <item>@string/distance_2</item>
+        <item>@string/distance_3</item>
     </string-array>
 
     <!-- Ways you can sort restaurants -->
     <string-array name="sort_by">
         <item>@string/sort_by_rating</item>
         <item>@string/sort_by_popularity</item>
-        <item>@string/sort_by_price</item>
+        <item>@string/sorted_by_distance</item>
     </string-array>
 </resources>

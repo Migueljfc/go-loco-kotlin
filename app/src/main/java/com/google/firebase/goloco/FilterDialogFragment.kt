@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.google.firebase.firestore.Query
 import com.google.firebase.goloco.databinding.DialogFiltersBinding
-import com.google.firebase.goloco.model.Restaurant
+import com.google.firebase.goloco.model.Local
 
 /**
  * Dialog Fragment containing filter form.
@@ -43,9 +43,9 @@ class FilterDialogFragment : DialogFragment() {
         get() {
             val selected = binding.spinnerPrice.selectedItem as String
             return when (selected) {
-                getString(R.string.price_1) -> 1
-                getString(R.string.price_2) -> 2
-                getString(R.string.price_3) -> 3
+                getString(R.string.distance_1) -> 1
+                getString(R.string.distance_2) -> 2
+                getString(R.string.distance_3) -> 3
                 else -> -1
             }
         }
@@ -54,13 +54,13 @@ class FilterDialogFragment : DialogFragment() {
         get() {
             val selected = binding.spinnerSort.selectedItem as String
             if (getString(R.string.sort_by_rating) == selected) {
-                return Restaurant.FIELD_AVG_RATING
+                return Local.FIELD_AVG_RATING
             }
-            if (getString(R.string.sort_by_price) == selected) {
-                return Restaurant.FIELD_PRICE
+            if (getString(R.string.sorted_by_distance) == selected) {
+                return Local.FIELD_LAT
             }
             return if (getString(R.string.sort_by_popularity) == selected) {
-                Restaurant.FIELD_POPULARITY
+                Local.FIELD_POPULARITY
             } else {
                 null
             }
@@ -72,7 +72,7 @@ class FilterDialogFragment : DialogFragment() {
             if (getString(R.string.sort_by_rating) == selected) {
                 return Query.Direction.DESCENDING
             }
-            if (getString(R.string.sort_by_price) == selected) {
+            if (getString(R.string.sorted_by_distance) == selected) {
                 return Query.Direction.ASCENDING
             }
             return if (getString(R.string.sort_by_popularity) == selected) {

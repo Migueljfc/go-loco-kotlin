@@ -10,16 +10,16 @@
         android:name="com.google.firebase.goloco.MainFragment"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_MainFragment_to_RestaurantDetailFragment"
-            app:destination="@id/RestaurantDetailFragment"/>
+            android:id="@+id/action_MainFragment_to_LocalDetailFragment"
+            app:destination="@id/LocalDetailFragment"/>
     </fragment>
 
     <fragment
-        android:id="@+id/RestaurantDetailFragment"
-        android:name="com.google.firebase.goloco.RestaurantDetailFragment"
-        tools:layout="@layout/fragment_restaurant_detail" >
+        android:id="@+id/LocalDetailFragment"
+        android:name="com.google.firebase.goloco.LocalDetailFragment"
+        tools:layout="@layout/fragment_local_detail" >
         <argument
-            android:name="key_restaurant_id"
+            android:name="key_local_id"
             app:argType="string" />
     </fragment>
 

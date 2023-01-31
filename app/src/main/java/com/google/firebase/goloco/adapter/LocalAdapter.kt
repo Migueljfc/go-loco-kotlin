@@ -9,12 +9,11 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.goloco.R
 import com.google.firebase.goloco.databinding.ItemLocalBinding
-import com.google.firebase.goloco.databinding.ItemRestaurantBinding
 import com.google.firebase.goloco.model.Local
-import com.google.firebase.goloco.util.RestaurantUtil
+import com.google.firebase.goloco.util.LocalUtil
 
 /**
- * RecyclerView adapter for a list of Restaurants.
+ * RecyclerView adapter for a list of Locals.
  */
 open class LocalAdapter(query: Query, private val listener: OnLocalSelectedListener) :
         FirestoreAdapter<LocalAdapter.ViewHolder>(query) {
@@ -62,7 +61,7 @@ open class LocalAdapter(query: Query, private val listener: OnLocalSelectedListe
             binding.localItemNumRatings.text = resources.getString(
                     R.string.fmt_num_ratings,
                     numRatings)
-            binding.localItemCoordinates.text = RestaurantUtil.getCoordinatesString(local.lat,local.lon)
+            binding.localItemCoordinates.text = LocalUtil.getCoordinatesString(local.lat,local.lon)
             // Click listener
             binding.root.setOnClickListener {
                 listener?.onLocalSelected(snapshot)

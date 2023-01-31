@@ -21,7 +21,8 @@ import com.google.firebase.goloco.adapter.RatingAdapter
 import com.google.firebase.goloco.model.Rating
 import com.google.firebase.goloco.model.Local
 import com.google.firebase.goloco.util.LocalUtil
-
+import java.math.RoundingMode
+import java.text.DecimalFormat
 class LocalDetailFragment : Fragment(),
     EventListener<DocumentSnapshot>,
     RatingDialogFragment.RatingListener {
@@ -44,18 +45,18 @@ class LocalDetailFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
 
         // Get local ID from extras
-        val localId = RestaurantDetailFragmentArgs.fromBundle(
+        val localId = LocalDetailFragmentArgs.fromBundle(
             requireArguments()
-        ).keyRestaurantId
+        ).keyLocalId
 
         // Initialize Firestore
         firestore = Firebase.firestore
 
-        // Get reference to the restaurant
-        restaurantRef = firestore.collection("restaurants").document(restaurantId)
+        // Get reference to the local
+        localRef = firestore.collection("locals").document(localId)
 
         // Get ratings
-        val ratingsQuery = restaurantRef
+        val ratingsQuery = localRef
                 .collection("ratings")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .limit(50)
@@ -85,7 +86,7 @@ class LocalDetailFragment : Fragment(),
         super.onStart()
 
         ratingAdapter.startListening()
-        restaurantRegistration = restaurantRef.addSnapshotListener(this)
+        localRegistration = localRef.addSnapshotListener(this)
     }
 
     public override fun onStop() {
@@ -93,28 +94,28 @@ class LocalDetailFragment : Fragment(),
 
         ratingAdapter.stopListening()
 
-        restaurantRegistration?.remove()
-        restaurantRegistration = null
+        localRegistration?.remove()
+        localRegistration = null
     }
 
     /**
-     * Listener for the Restaurant document ([.restaurantRef]).
+     * Listener for the Local document ([.localRef]).
      */
     override fun onEvent(snapshot: DocumentSnapshot?, e: FirebaseFirestoreException?) {
         if (e != null) {
-            Log.w(TAG, "restaurant:onEvent", e)
+            Log.w(TAG, "local:onEvent", e)
             return
         }
 
         snapshot?.let {
-            val restaurant = snapshot.toObject<Local>()
-            if (restaurant != null) {
-                onRestaurantLoaded(restaurant)
+            val local = snapshot.toObject<Local>()
+            if (local != null) {
+                onLocalLoaded(local)
             }
         }
     }
 
-    private fun onRestaurantLoaded(local: Local) {
+    private fun onLocalLoaded(local: Local) {
         binding.localName.text = local.name
         binding.localRating.rating = local.avgRating.toFloat()
         binding.localNumRatings.text = getString(R.string.fmt_num_ratings, local.numRatings)
@@ -138,7 +139,7 @@ class LocalDetailFragment : Fragment(),
 
     override fun onRating(rating: Rating) {
         // In a transaction, add the new rating and update the aggregate totals
-        addRating(restaurantRef, rating)
+        addRating(localRef, rating)
                 .addOnSuccessListener(requireActivity()) {
                     Log.d(TAG, "Rating added")
 
@@ -157,28 +158,28 @@ class LocalDetailFragment : Fragment(),
                 }
     }
 
-    private fun addRating(restaurantRef: DocumentReference, rating: Rating): Task<Void> {
+    private fun addRating(localRef: DocumentReference, rating: Rating): Task<Void> {
         // Create reference for new rating, for use inside the transaction
-        val ratingRef = restaurantRef.collection("ratings").document()
+        val ratingRef = localRef.collection("ratings").document()
 
         // In a transaction, add the new rating and update the aggregate totals
         return firestore.runTransaction { transaction ->
-            val restaurant = transaction.get(restaurantRef).toObject<Restaurant>()
-                ?: throw Exception("Restaurant not found at ${restaurantRef.path}")
+            val local = transaction.get(localRef).toObject<Local>()
+                ?: throw Exception("Local not found at ${localRef.path}")
 
             // Compute new number of ratings
-            val newNumRatings = restaurant.numRatings + 1
+            val newNumRatings = local.numRatings + 1
 
             // Compute new average rating
-            val oldRatingTotal = restaurant.avgRating * restaurant.numRatings
+            val oldRatingTotal = local.avgRating * local.numRatings
             val newAvgRating = (oldRatingTotal + rating.rating) / newNumRatings
 
-            // Set new restaurant info
-            restaurant.numRatings = newNumRatings
-            restaurant.avgRating = newAvgRating
+            // Set new local info
+            local.numRatings = newNumRatings
+            local.avgRating = newAvgRating
 
             // Commit to Firestore
-            transaction.set(restaurantRef, restaurant)
+            transaction.set(localRef, local)
             transaction.set(ratingRef, rating)
 
             null
@@ -195,8 +196,8 @@ class LocalDetailFragment : Fragment(),
 
     companion object {
 
-        private const val TAG = "RestaurantDetail"
+        private const val TAG = "LocalDetail"
 
-        const val KEY_RESTAURANT_ID = "key_restaurant_id"
+        const val KEY_LOCAL_ID = "key_local_id"
     }
 }

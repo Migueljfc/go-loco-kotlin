@@ -1,29 +1,32 @@
 package com.google.firebase.goloco.util
 
 import android.content.Context
-import android.util.Log
 import com.google.firebase.goloco.R
 import com.google.firebase.goloco.model.Local
 import java.util.*
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 /**
  * Utilities for Restaurants.
  */
-object RestaurantUtil {
+object LocalUtil {
 
     private const val RESTAURANT_URL_FMT = "https://storage.googleapis.com/firestorequickstarts.appspot.com/food_%d.png"
-    private const val MAX_IMAGE_NUM = 22
+    private const val CATEGORY_URL = "https://firebasestorage.googleapis.com/v0/b/go-loco-fe08c.appspot.com/o/%s%d.jfif?alt=media&token=af47cfff-b015-4738-bd45-40a67ee73396"
+
+    private const val MAX_IMAGE_NUM = 5
 
     private val NAME_FIRST_WORDS = arrayOf(
-            "Infante D.Pedro", "Laço", "Misericórdia", "Cruzeiro", "Musica", "D. Afonso Henriques", "Marnoto", "Guerra", "Aveiro")
+            "Infante", "Big", "Belém", "Cruzeiro", "Estação", "Padrão", "Sé", "Quinta", "Torre")
 
     private val NAME_SECOND_WORDS = arrayOf(
-            "Restaurant", "Cafe", "Monument", "Statue", "Park", "Garden", "Bridge", "Church","Museum")
+            "D.Pedro", "Ben", "Nacional", "Jerónicos", "S.Jorge", "Descobrimentos", "Mouros", "Ajuda","Pena")
 
     /**
      * Create a random Restaurant POJO.
      */
-    fun getRandom(context: Context): Local {
+     fun getRandom(context: Context): Local {
         val local = Local()
         val random = Random()
         val minLatitude = 36.9761888
@@ -43,7 +46,7 @@ object RestaurantUtil {
         local.name = getRandomName(random)
         local.city = getRandomString(cities, random)
         local.category = getRandomString(categories, random)
-        local.photo = getRandomImageUrl(random)
+        local.photo = getRandomImageUrl(random,local.category.toString())
         local.lat = minLatitude + (maxLatitude - minLatitude) * random.nextDouble()
         local.lon = minLongitude + (maxLongitude - minLongitude) * random.nextDouble()
         local.numRatings = random.nextInt(20)
@@ -53,15 +56,7 @@ object RestaurantUtil {
         return local
     }
 
-    /**
-     * Get a random image.
-     */
-    private fun getRandomImageUrl(random: Random): String {
-        // Integer between 1 and MAX_IMAGE_NUM (inclusive)
-        val id = random.nextInt(MAX_IMAGE_NUM) + 1
-        Log.d("IMAGE URL", "URL DA IMAGEM = " + String.format(Locale.getDefault(), RESTAURANT_URL_FMT, id))
-        return String.format(Locale.getDefault(), RESTAURANT_URL_FMT, id)
-    }
+
 
 
 
@@ -69,7 +64,10 @@ object RestaurantUtil {
      * Get price represented as dollar signs.
      */
     fun getCoordinatesString(lat: Double, lon:Double): String {
-        return "($lat,$lon)"
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.UP
+
+        return "(${df.format(lat)},${df.format(lon)})"
     }
 
     private fun getRandomName(random: Random): String {
@@ -80,6 +78,38 @@ object RestaurantUtil {
     private fun getRandomString(array: Array<String>, random: Random): String {
         val ind = random.nextInt(array.size)
         return array[ind]
+    }
+
+    /*private fun getRandomImageUrl2(query: String): String {
+        val client = OkHttpClient()
+        val request = Request.Builder()
+            .url("https://image-search-api.bingoladen.repl.co/image-search?query=$query")
+            .build()
+
+        val response = client.newCall(request).execute()
+        Log.d("DEBUG","$response")
+        if (response.isSuccessful) {
+            Log.d("DEBUG", "Tou aqui")
+            val responseString = response.body?.string()
+            return URL(responseString).toString()
+        } else {
+            return "https://storage.googleapis.com/firestorequickstarts.appspot.com/food_9.png"
+        }
+    }*/
+    /**
+     * Get a random image.
+     */
+    private fun getRandomImageUrl(random: Random, category: String): String {
+        // Integer between 1 and MAX_IMAGE_NUM (inclusive)
+        val id = random.nextInt(MAX_IMAGE_NUM) + 1
+        val str = category.lowercase()
+        var result = ""
+        if (category == "Restaurant")
+            result = String.format(Locale.getDefault(), RESTAURANT_URL_FMT, id)
+        else{
+            result = String.format(Locale.getDefault(), CATEGORY_URL, str,id)
+        }
+        return result
     }
 
 

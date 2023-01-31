@@ -1,7 +1,6 @@
 package com.google.firebase.goloco.model
 
 import com.google.firebase.firestore.IgnoreExtraProperties
-import com.google.type.LatLng
 
 /**
  * Local POJO.
