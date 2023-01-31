@@ -8,6 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.goloco.R
+import com.google.firebase.goloco.databinding.ItemLocalBinding
 import com.google.firebase.goloco.databinding.ItemRestaurantBinding
 import com.google.firebase.goloco.model.Local
 import com.google.firebase.goloco.util.RestaurantUtil
@@ -15,17 +16,17 @@ import com.google.firebase.goloco.util.RestaurantUtil
 /**
  * RecyclerView adapter for a list of Restaurants.
  */
-open class RestaurantAdapter(query: Query, private val listener: OnRestaurantSelectedListener) :
-        FirestoreAdapter<RestaurantAdapter.ViewHolder>(query) {
+open class LocalAdapter(query: Query, private val listener: OnLocalSelectedListener) :
+        FirestoreAdapter<LocalAdapter.ViewHolder>(query) {
 
-    interface OnRestaurantSelectedListener {
+    interface OnLocalSelectedListener {
 
-        fun onRestaurantSelected(restaurant: DocumentSnapshot)
+        fun onLocalSelected(local: DocumentSnapshot)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemRestaurantBinding.inflate(
+            ItemLocalBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false))
     }
 
@@ -33,39 +34,38 @@ open class RestaurantAdapter(query: Query, private val listener: OnRestaurantSel
         holder.bind(getSnapshot(position), listener)
     }
 
-    class ViewHolder(val binding: ItemRestaurantBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: ItemLocalBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
             snapshot: DocumentSnapshot,
-            listener: OnRestaurantSelectedListener?
+            listener: OnLocalSelectedListener?
         ) {
 
-            val restaurant = snapshot.toObject<Local>()
-            if (restaurant == null) {
+            val local = snapshot.toObject<Local>()
+            if (local == null) {
                 return
             }
 
             val resources = binding.root.resources
 
             // Load image
-            Glide.with(binding.restaurantItemImage.context)
-                    .load(restaurant.photo)
-                    .into(binding.restaurantItemImage)
+            Glide.with(binding.localItemImage.context)
+                    .load(local.photo)
+                    .into(binding.localItemImage)
 
-            val numRatings: Int = restaurant.numRatings
+            val numRatings: Int = local.numRatings
 
-            binding.restaurantItemName.text = restaurant.name
-            binding.restaurantItemRating.rating = restaurant.avgRating.toFloat()
-            binding.restaurantItemCity.text = restaurant.city
-            binding.restaurantItemCategory.text = restaurant.category
-            binding.restaurantItemNumRatings.text = resources.getString(
+            binding.localItemName.text = local.name
+            binding.localItemRating.rating = local.avgRating.toFloat()
+            binding.localItemCity.text = local.city
+            binding.localItemCategory.text = local.category
+            binding.localItemNumRatings.text = resources.getString(
                     R.string.fmt_num_ratings,
                     numRatings)
-            binding.restaurantItemPrice.text = RestaurantUtil.getPriceString(restaurant)
-
+            binding.localItemCoordinates.text = RestaurantUtil.getCoordinatesString(local.lat,local.lon)
             // Click listener
             binding.root.setOnClickListener {
-                listener?.onRestaurantSelected(snapshot)
+                listener?.onLocalSelected(snapshot)
             }
         }
     }

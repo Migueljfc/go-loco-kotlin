@@ -68,13 +68,8 @@ object RestaurantUtil {
     /**
      * Get price represented as dollar signs.
      */
-    fun getPriceString(priceInt: Int): String {
-        when (priceInt) {
-            1 -> return "$"
-            2 -> return "$$"
-            3 -> return "$$$"
-            else -> return "$$$"
-        }
+    fun getCoordinatesString(lat: Double, lon:Double): String {
+        return "($lat,$lon)"
     }
 
     private fun getRandomName(random: Random): String {

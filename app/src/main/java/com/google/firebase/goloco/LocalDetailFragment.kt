@@ -11,41 +11,40 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.Tasks
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.goloco.databinding.FragmentRestaurantDetailBinding
+import com.google.firebase.goloco.databinding.FragmentLocalDetailBinding
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.goloco.adapter.RatingAdapter
 import com.google.firebase.goloco.model.Rating
-import com.google.firebase.goloco.model.Restaurant
-import com.google.firebase.goloco.util.RestaurantUtil
+import com.google.firebase.goloco.model.Local
+import com.google.firebase.goloco.util.LocalUtil
 
-class RestaurantDetailFragment : Fragment(),
+class LocalDetailFragment : Fragment(),
     EventListener<DocumentSnapshot>,
     RatingDialogFragment.RatingListener {
 
     private var ratingDialog: RatingDialogFragment? = null
 
-    private lateinit var binding: FragmentRestaurantDetailBinding
+    private lateinit var binding: FragmentLocalDetailBinding
     private lateinit var firestore: FirebaseFirestore
-    private lateinit var restaurantRef: DocumentReference
+    private lateinit var localRef: DocumentReference
     private lateinit var ratingAdapter: RatingAdapter
 
-    private var restaurantRegistration: ListenerRegistration? = null
+    private var localRegistration: ListenerRegistration? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentRestaurantDetailBinding.inflate(inflater, container, false)
+        binding = FragmentLocalDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Get restaurant ID from extras
-        val restaurantId = RestaurantDetailFragmentArgs.fromBundle(
+        // Get local ID from extras
+        val localId = RestaurantDetailFragmentArgs.fromBundle(
             requireArguments()
         ).keyRestaurantId
 
@@ -78,7 +77,7 @@ class RestaurantDetailFragment : Fragment(),
 
         ratingDialog = RatingDialogFragment()
 
-        binding.restaurantButtonBack.setOnClickListener { onBackArrowClicked() }
+        binding.localButtonBack.setOnClickListener { onBackArrowClicked() }
         binding.fabShowRatingDialog.setOnClickListener { onAddRatingClicked() }
     }
 
@@ -108,25 +107,25 @@ class RestaurantDetailFragment : Fragment(),
         }
 
         snapshot?.let {
-            val restaurant = snapshot.toObject<Restaurant>()
+            val restaurant = snapshot.toObject<Local>()
             if (restaurant != null) {
                 onRestaurantLoaded(restaurant)
             }
         }
     }
 
-    private fun onRestaurantLoaded(restaurant: Restaurant) {
-        binding.restaurantName.text = restaurant.name
-        binding.restaurantRating.rating = restaurant.avgRating.toFloat()
-        binding.restaurantNumRatings.text = getString(R.string.fmt_num_ratings, restaurant.numRatings)
-        binding.restaurantCity.text = restaurant.city
-        binding.restaurantCategory.text = restaurant.category
-        binding.restaurantPrice.text = RestaurantUtil.getPriceString(restaurant)
+    private fun onRestaurantLoaded(local: Local) {
+        binding.localName.text = local.name
+        binding.localRating.rating = local.avgRating.toFloat()
+        binding.localNumRatings.text = getString(R.string.fmt_num_ratings, local.numRatings)
+        binding.localCity.text = local.city
+        binding.localCategory.text = local.category
+        binding.localCoordinates.text = LocalUtil.getCoordinatesString(local.lat,local.lon)
 
         // Background image
-        Glide.with(binding.restaurantImage.context)
-                .load(restaurant.photo)
-                .into(binding.restaurantImage)
+        Glide.with(binding.localImage.context)
+                .load(local.photo)
+                .into(binding.localImage)
     }
 
     private fun onBackArrowClicked() {
