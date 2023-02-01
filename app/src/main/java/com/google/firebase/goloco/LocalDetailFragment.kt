@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
@@ -21,8 +22,8 @@ import com.google.firebase.goloco.adapter.RatingAdapter
 import com.google.firebase.goloco.model.Rating
 import com.google.firebase.goloco.model.Local
 import com.google.firebase.goloco.util.LocalUtil
-import java.math.RoundingMode
-import java.text.DecimalFormat
+
+
 class LocalDetailFragment : Fragment(),
     EventListener<DocumentSnapshot>,
     RatingDialogFragment.RatingListener {
@@ -33,6 +34,7 @@ class LocalDetailFragment : Fragment(),
     private lateinit var firestore: FirebaseFirestore
     private lateinit var localRef: DocumentReference
     private lateinit var ratingAdapter: RatingAdapter
+    private var localId = ""
 
     private var localRegistration: ListenerRegistration? = null
 
@@ -80,6 +82,13 @@ class LocalDetailFragment : Fragment(),
 
         binding.localButtonBack.setOnClickListener { onBackArrowClicked() }
         binding.fabShowRatingDialog.setOnClickListener { onAddRatingClicked() }
+        binding.fabShowMapScreen.setOnClickListener{
+            val action = LocalDetailFragmentDirections.actionLocalDetailFragmentToMapFragment(localId)
+            Log.d("DEBUG", "Local ID = $localId")
+            val navController = findNavController()
+            navController.navigate(action)
+        }
+
     }
 
     public override fun onStart() {
@@ -109,6 +118,7 @@ class LocalDetailFragment : Fragment(),
 
         snapshot?.let {
             val local = snapshot.toObject<Local>()
+            localId = snapshot.id
             if (local != null) {
                 onLocalLoaded(local)
             }
@@ -136,6 +146,7 @@ class LocalDetailFragment : Fragment(),
     private fun onAddRatingClicked() {
         ratingDialog?.show(childFragmentManager, RatingDialogFragment.TAG)
     }
+
 
     override fun onRating(rating: Rating) {
         // In a transaction, add the new rating and update the aggregate totals

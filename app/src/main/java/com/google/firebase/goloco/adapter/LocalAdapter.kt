@@ -23,6 +23,7 @@ open class LocalAdapter(query: Query, private val listener: OnLocalSelectedListe
         fun onLocalSelected(local: DocumentSnapshot)
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemLocalBinding.inflate(

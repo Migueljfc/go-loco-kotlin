@@ -39,9 +39,9 @@ class FilterDialogFragment : DialogFragment() {
             }
         }
 
-    private val selectedPrice: Int
+    private val selectedDistance: Int
         get() {
-            val selected = binding.spinnerPrice.selectedItem as String
+            val selected = binding.spinnerDistance.selectedItem as String
             return when (selected) {
                 getString(R.string.distance_1) -> 1
                 getString(R.string.distance_2) -> 2
@@ -88,7 +88,7 @@ class FilterDialogFragment : DialogFragment() {
 
             filters.category = selectedCategory
             filters.city = selectedCity
-            filters.price = selectedPrice
+            filters.price = selectedDistance
             filters.sortBy = selectedSortBy
             filters.sortDirection = sortDirection
 
@@ -146,7 +146,7 @@ class FilterDialogFragment : DialogFragment() {
         _binding?.let {
             it.spinnerCategory.setSelection(0)
             it.spinnerCity.setSelection(0)
-            it.spinnerPrice.setSelection(0)
+            it.spinnerDistance.setSelection(0)
             it.spinnerSort.setSelection(0)
         }
     }

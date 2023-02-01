@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Go Loco</string>
 
-    <string name="value_any_category">All Type </string>
+    <string name="value_any_category">All Kinds </string>
     <string name="value_any_city">Anywhere</string>
     <string name="value_any_price">Any Distance</string>
 
@@ -107,8 +107,8 @@
         <item>Rio Maior</item>
     </string-array>
 
-    <!-- Price filters -->
-    <string-array name="prices">
+    <!-- Distance filters -->
+    <string-array name="distances">
         <item>@string/value_any_price</item>
 
         <item>@string/distance_1</item>

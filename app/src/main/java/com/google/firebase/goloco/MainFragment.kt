@@ -1,6 +1,12 @@
 package com.google.firebase.goloco
 
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,8 +16,13 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -45,11 +56,14 @@ class MainFragment : Fragment(),
     private lateinit var binding: FragmentMainBinding
     private lateinit var filterDialog: FilterDialogFragment
     private var adapter: LocalAdapter? = null
-
+    private  var location: Location? = null
     private lateinit var viewModel: MainActivityViewModel
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) { result -> this.onSignInResult(result) }
+
+    private val locationPermissionRequestCode = 1
+    private val fineLocationPermission = ACCESS_FINE_LOCATION
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,6 +75,7 @@ class MainFragment : Fragment(),
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Firestore
@@ -112,6 +127,7 @@ class MainFragment : Fragment(),
 
         binding.filterBar.setOnClickListener { onFilterClicked() }
         binding.buttonClearFilter.setOnClickListener { onClearFilterClicked() }
+        checkLocationPermission()
     }
 
     override fun onStart() {
@@ -167,8 +183,10 @@ class MainFragment : Fragment(),
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun onFilterClicked() {
         // Show the dialog containing filter options
+        checkLocationPermission()
         filterDialog.show(childFragmentManager, FilterDialogFragment.TAG)
     }
 
@@ -182,7 +200,6 @@ class MainFragment : Fragment(),
         // Go to the details page for the selected local
         val action = MainFragmentDirections
             .actionMainFragmentToLocalDetailFragment(local.id)
-
         findNavController().navigate(action)
     }
 
@@ -263,6 +280,61 @@ class MainFragment : Fragment(),
             .setNegativeButton(R.string.option_exit) { _, _ -> requireActivity().finish() }.create()
 
         dialog.show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(requireContext(), fineLocationPermission) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity as Activity, fineLocationPermission)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Localization required")
+                    .setMessage("We need your location to show you the best places to visit")
+                    .setPositiveButton("OK") { dialog, which ->
+                        ActivityCompat.requestPermissions(
+                            activity as Activity,
+                            arrayOf(fineLocationPermission),
+                            locationPermissionRequestCode
+                        )
+                    }
+                    .create()
+                    .show()
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(
+                    activity as Activity,
+                    arrayOf(fineLocationPermission),
+                    locationPermissionRequestCode
+                )
+            }
+        } else {
+            // Permission has already been granted
+            getUserLocation()
+        }
+    }
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        if (requestCode == locationPermissionRequestCode) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission is granted
+                getUserLocation()
+            } else {
+                // Permission was denied or request was cancelled
+                Toast.makeText(requireContext(), "No permission to access the user location", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun getUserLocation() {
+        val locationManager = requireContext().getSystemService(LocationManager::class.java)
+        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        Log.d("DEBUG", "LOCATION ${location.toString()}")
+
+
     }
 
     private fun showTodoToast() {

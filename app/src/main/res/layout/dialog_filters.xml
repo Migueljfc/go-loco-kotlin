@@ -16,16 +16,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Food Type -->
+    <!-- Location Type -->
     <ImageView
         android:id="@+id/icon_category"
         style="@style/AppTheme.FilterIcon"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/spinnerCategory"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/spinnerCategory"
-        app:srcCompat="@drawable/ic_fastfood_white_24dp"
+        app:srcCompat="@drawable/monument32px"
         app:tint="@color/greySecondary" />
 
     <Spinner
@@ -63,26 +62,26 @@
         app:layout_constraintStart_toEndOf="@+id/icon_city"
         app:layout_constraintTop_toBottomOf="@+id/spinnerCategory" />
 
-    <!-- Price -->
+    <!-- Distance -->
     <ImageView
-        android:id="@+id/icon_price"
+        android:id="@+id/icon_distance"
         style="@style/AppTheme.FilterIcon"
-        app:layout_constraintBottom_toBottomOf="@+id/spinnerPrice"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerDistance"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/spinnerPrice"
-        app:srcCompat="@drawable/ic_monetization_on_white_24px"
+        app:layout_constraintTop_toTopOf="@+id/spinnerDistance"
+        app:srcCompat="@drawable/distance_icon_32px"
         app:tint="@color/greySecondary" />
 
     <Spinner
-        android:id="@+id/spinnerPrice"
+        android:id="@+id/spinnerDistance"
         style="@style/AppTheme.FilterSpinner"
         android:layout_width="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:entries="@array/prices"
+        android:entries="@array/distances"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/icon_price"
+        app:layout_constraintStart_toEndOf="@+id/icon_distance"
         app:layout_constraintTop_toBottomOf="@+id/spinnerCity" />
 
     <!-- Sort By -->
@@ -105,7 +104,7 @@
         android:entries="@array/sort_by"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/icon_sort"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerPrice" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerDistance" />
 
     <!-- Cancel and apply buttons -->
     <View
