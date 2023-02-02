@@ -8,7 +8,8 @@
 
 ## About <a name = "about"></a>
 
-O projeto foi desenvolvido com a finalidade de criar uma aplicação android na qual um utilizador possa procurar por pontos de interesse próximos. A aplicação incentiva o utilizador a caminhar, orientar-se pela cidade e explorar locais escondidos que possam existir na sua proximidade que, por outros meios, possam passar despercebidos.
+O projeto foi desenvolvido com a finalidade de criar uma aplicação android na qual um utilizador possa procurar por pontos de interesse , filtrá-los e avaliá-los. A aplicação incentiva o utilizador a caminhar, orientar-se pela cidade e explorar locais escondidos que possam existir na sua proximidade que, por outros meios, possam passar despercebidos.
+
 
 ## Getting Started <a name = "getting_started"></a>
 
