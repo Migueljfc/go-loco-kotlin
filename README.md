@@ -14,11 +14,13 @@ O projeto foi desenvolvido com a finalidade de criar uma aplicação android na 
 
 ### Prerequisites
 
--Android Studio com a versao instalada 4.0 ou superior
--Android emulator com a versão da API 19 ou superior
--Node.js versão 10 ou superior
--Java versão 8 ou superior
--Firebase CLI 
+<ul>
+  <li>Android Studio com a versao instalada 4.0 ou superior</li>
+  <li>Android emulator com a versão da API 19 ou superior</li>
+  <li>Node.js versão 10 ou superior</li>
+  <li>Java versão 8 ou superior</li>
+  <li>Firebase CLI </li>
+</ul>
 
 
 ## Usage <a name = "usage"></a>
