@@ -8,7 +8,7 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.goloco.databinding.ItemRatingBinding
 import com.google.firebase.goloco.model.Rating
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 /**
  * RecyclerView adapter for a list of [Rating].

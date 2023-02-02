@@ -330,8 +330,6 @@ class MainFragment : Fragment(),
     private fun getUserLocation() {
         val locationManager = requireContext().getSystemService(LocationManager::class.java)
         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        Log.d("DEBUG", "LOCATION ${location.toString()}")
-
 
     }
 

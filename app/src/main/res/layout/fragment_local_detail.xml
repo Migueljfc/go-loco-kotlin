@@ -128,17 +128,16 @@
             style="@style/AppTheme.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="192dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
             android:textColor="@android:color/white"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/localImage"
+            app:layout_constraintTop_toTopOf="@+id/localName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/localCity"
-            app:layout_constraintTop_toBottomOf="@+id/localRating"
-            app:layout_constraintVertical_bias="1.0"
             tools:text="(0.0,0.0)" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabShowRatingDialog"
@@ -159,13 +158,25 @@
             android:clickable="true"
             app:layout_constraintEnd_toStartOf="@+id/fabShowRatingDialog"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/localCoordinates"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_place_white_24px" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Ratings -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerRatings"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        android:clipToPadding="false"
+        android:paddingTop="28dp"
+        android:paddingBottom="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/local_top_card"
+        tools:listitem="@layout/item_rating"
+        tools:visibility="invisible" />
+
 
     <!-- View for empty ratings -->
     <LinearLayout
@@ -181,18 +192,6 @@
         app:layout_constraintTop_toBottomOf="@+id/local_top_card"
         tools:visibility="visible"
         tools:ignore="UseCompoundDrawables">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerRatings"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@android:color/transparent"
-            android:clipToPadding="false"
-            android:paddingTop="28dp"
-            android:paddingBottom="16dp"
-            android:visibility="gone"
-            tools:listitem="@layout/item_rating"
-            tools:visibility="invisible" />
 
         <ImageView
             style="@style/AppTheme.PizzaGuy"

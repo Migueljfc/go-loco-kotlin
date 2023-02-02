@@ -45,7 +45,6 @@ class MapFragment : Fragment() {
                     name = documentSnapshot.getString("name")!!
                     city = documentSnapshot.getString("city")!!
                     category = documentSnapshot.getString("category")!!
-                    Log.d("DEBUG", "Lat = $lat Lon = $lng")
                     val marker = Marker(mapView)
                     marker.apply {
 
@@ -79,8 +78,6 @@ class MapFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        Log.d("DEBUG", "Lat = $lat Lon = $lng ")
         mapView.apply {
             setTileSource(TileSourceFactory.MAPNIK)
             setBuiltInZoomControls(true)
@@ -103,7 +100,7 @@ class MapFragment : Fragment() {
     }
     companion object {
 
-        private const val TAG = "DEBUG"
+        private const val TAG = "MapFragment"
 
         const val KEY_LOCAL_ID = "key_local_id"
     }

@@ -80,22 +80,6 @@ object LocalUtil {
         return array[ind]
     }
 
-    /*private fun getRandomImageUrl2(query: String): String {
-        val client = OkHttpClient()
-        val request = Request.Builder()
-            .url("https://image-search-api.bingoladen.repl.co/image-search?query=$query")
-            .build()
-
-        val response = client.newCall(request).execute()
-        Log.d("DEBUG","$response")
-        if (response.isSuccessful) {
-            Log.d("DEBUG", "Tou aqui")
-            val responseString = response.body?.string()
-            return URL(responseString).toString()
-        } else {
-            return "https://storage.googleapis.com/firestorequickstarts.appspot.com/food_9.png"
-        }
-    }*/
     /**
      * Get a random image.
      */
