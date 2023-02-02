@@ -20,9 +20,7 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -158,7 +156,7 @@ class MainFragment : Fragment(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_add_items -> onAddItemsClicked()
+            //R.id.menu_add_items -> onAddItemsClicked()
             R.id.menu_sign_out -> {
                 AuthUI.getInstance().signOut(requireContext())
                 startSignIn()
@@ -262,7 +260,7 @@ class MainFragment : Fragment(),
     private fun onAddItemsClicked() {
         Log.d("OAIC", "onAddItemsClicked")
         val localsRef = firestore.collection("locals")
-        for (i in 0..12) {
+        for (i in 0..29) {
             // Create random local / ratings
             val randomLocal = LocalUtil.getRandom(requireContext())
 

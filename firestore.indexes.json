@@ -1,7 +1,7 @@
 {
   "indexes": [
     {
-      "collectionId": "restaurants",
+      "collectionId": "locals",
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "city", "mode": "ASCENDING" },
@@ -9,7 +9,7 @@
       ]
     },
     {
-      "collectionId": "restaurants",
+      "collectionId": "locals",
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "category", "mode": "ASCENDING" },
@@ -17,15 +17,15 @@
       ]
     },
     {
-      "collectionId": "restaurants",
+      "collectionId": "locals",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "price", "mode": "ASCENDING" },
+        { "fieldPath": "lat", "mode": "ASCENDING" },
         { "fieldPath": "avgRating", "mode": "DESCENDING" }
       ]
     },
     {
-      "collectionId": "restaurants",
+      "collectionId": "locals",
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "city", "mode": "ASCENDING" },
@@ -33,7 +33,7 @@
       ]
     },
     {
-      "collectionId": "restaurants",
+      "collectionId": "locals",
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "category", "mode": "ASCENDING" },
@@ -41,26 +41,26 @@
       ]
     },
     {
-      "collectionId": "restaurants",
+      "collectionId": "locals",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "price", "mode": "ASCENDING" },
+        { "fieldPath": "lat", "mode": "ASCENDING" },
         { "fieldPath": "numRatings", "mode": "DESCENDING" }
       ]
     },
     {
-      "collectionId": "restaurants",
+      "collectionId": "locals",
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "city", "mode": "ASCENDING" },
-        { "fieldPath": "price", "mode": "ASCENDING" }
+        { "fieldPath": "lat", "mode": "ASCENDING" }
       ]
     },
     {
-      "collectionId": "restaurants",
+      "collectionId": "locals",
       "fields": [
         { "fieldPath": "category", "mode": "ASCENDING" },
-        { "fieldPath": "price", "mode": "ASCENDING" }
+        { "fieldPath": "lat", "mode": "ASCENDING" }
       ]
     }
   ],

@@ -42,69 +42,68 @@
     <string-array name="categories">
         <item>@string/value_any_category</item>
 
-        <item>Street</item>
-        <item>Church</item>
         <item>Bar</item>
-        <item>Bridge</item>
-        <item>Park</item>
-        <item>Museum</item>
-        <item>Statue</item>
         <item>Building</item>
+        <item>Bridge</item>
+        <item>Church</item>
+        <item>Museum</item>
+        <item>Park</item>
         <item>Restaurant</item>
+        <item>Statue</item>
+        <item>Street</item>
         <item>Others</item>
+
     </string-array>
 
     <!-- 50 most populous cities in the US -->
     <string-array name="cities">
         <item>@string/value_any_city</item>
 
-        <item>Lisboa</item>
-        <item>Coimbra</item>
-        <item>Braga</item>
-        <item>Évora</item>
+        <item>Abrantes</item>
         <item>Aveiro</item>
-        <item>Porto</item>
-        <item>Faro</item>
-        <item>Sintra</item>
-        <item>Funchal</item>
-        <item>Guarda</item>
-        <item>Gouveia</item>
-        <item>Fundão</item>
-        <item>Fátima</item>
-        <item>Leiria</item>
-        <item>Seia</item>
+        <item>Braga</item>
+        <item>Castelo Branco</item>
         <item>Chaves</item>
-        <item>Trofa</item>
-        <item>Tomar</item>
-        <item>Portalegre</item>
-        <item>Maia</item>
+        <item>Coimbra</item>
+        <item>Covilhã</item>
+        <item>Évora</item>
+        <item>Fafe</item>
+        <item>Fátima</item>
+        <item>Fundão</item>
+        <item>Funchal</item>
+        <item>Gouveia</item>
+        <item>Guarda</item>
+        <item>Ílhavo</item>
+        <item>Leiria</item>
+        <item>Lisboa</item>
         <item>Loures</item>
-        <item>Trancoso</item>
-        <item>Viseu</item>
         <item>Mangualde</item>
         <item>Manteigas</item>
-        <item>Paredes</item>
-        <item>Covilhã</item>
-        <item>Abrantes</item>
-        <item>Castelo Branco</item>
-        <item>Setúbal</item>
-        <item>Cartaxo</item>
-        <item>Fafe</item>
-        <item>Ílhavo</item>
-        <item>Moura</item>
+        <item>Maia</item>
         <item>Matosinhos</item>
+        <item>Moura</item>
         <item>Ovar</item>
+        <item>Paredes</item>
+        <item>Portalegre</item>
         <item>Portimão</item>
-        <item>Sabugal</item>
-        <item>Seixal</item>
-        <item>Tondela</item>
-        <item>Valongo</item>
-        <item>Vizela</item>
-        <item>Sines</item>
-        <item>Santarém</item>
-        <item>Sacavém</item>
-        <item>Rio Tinto</item>
+        <item>Porto</item>
         <item>Rio Maior</item>
+        <item>Rio Tinto</item>
+        <item>Sacavém</item>
+        <item>Santarém</item>
+        <item>Sabugal</item>
+        <item>Seia</item>
+        <item>Seixal</item>
+        <item>Setúbal</item>
+        <item>Sines</item>
+        <item>Sintra</item>
+        <item>Tondela</item>
+        <item>Tomar</item>
+        <item>Trancoso</item>
+        <item>Trofa</item>
+        <item>Valongo</item>
+        <item>Viseu</item>
+        <item>Vizela</item>
     </string-array>
 
     <!-- Distance filters -->

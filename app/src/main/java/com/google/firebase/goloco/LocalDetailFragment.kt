@@ -16,12 +16,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.goloco.databinding.FragmentLocalDetailBinding
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.goloco.adapter.RatingAdapter
-import com.google.firebase.goloco.model.Rating
+import com.google.firebase.goloco.databinding.FragmentLocalDetailBinding
 import com.google.firebase.goloco.model.Local
+import com.google.firebase.goloco.model.Rating
 import com.google.firebase.goloco.util.LocalUtil
+import com.google.firebase.ktx.Firebase
 
 
 class LocalDetailFragment : Fragment(),
@@ -38,7 +38,11 @@ class LocalDetailFragment : Fragment(),
 
     private var localRegistration: ListenerRegistration? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentLocalDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -59,9 +63,9 @@ class LocalDetailFragment : Fragment(),
 
         // Get ratings
         val ratingsQuery = localRef
-                .collection("ratings")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .limit(50)
+            .collection("ratings")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .limit(50)
 
         // RecyclerView
         ratingAdapter = object : RatingAdapter(ratingsQuery) {
@@ -82,8 +86,9 @@ class LocalDetailFragment : Fragment(),
 
         binding.localButtonBack.setOnClickListener { onBackArrowClicked() }
         binding.fabShowRatingDialog.setOnClickListener { onAddRatingClicked() }
-        binding.fabShowMapScreen.setOnClickListener{
-            val action = LocalDetailFragmentDirections.actionLocalDetailFragmentToMapFragment(localId)
+        binding.fabShowMapScreen.setOnClickListener {
+            val action =
+                LocalDetailFragmentDirections.actionLocalDetailFragmentToMapFragment(localId)
             Log.d("DEBUG", "Local ID = $localId")
             val navController = findNavController()
             navController.navigate(action)
@@ -131,12 +136,12 @@ class LocalDetailFragment : Fragment(),
         binding.localNumRatings.text = getString(R.string.fmt_num_ratings, local.numRatings)
         binding.localCity.text = local.city
         binding.localCategory.text = local.category
-        binding.localCoordinates.text = LocalUtil.getCoordinatesString(local.lat,local.lon)
+        binding.localCoordinates.text = LocalUtil.getCoordinatesString(local.lat, local.lon)
 
         // Background image
         Glide.with(binding.localImage.context)
-                .load(local.photo)
-                .into(binding.localImage)
+            .load(local.photo)
+            .into(binding.localImage)
     }
 
     private fun onBackArrowClicked() {
@@ -151,22 +156,23 @@ class LocalDetailFragment : Fragment(),
     override fun onRating(rating: Rating) {
         // In a transaction, add the new rating and update the aggregate totals
         addRating(localRef, rating)
-                .addOnSuccessListener(requireActivity()) {
-                    Log.d(TAG, "Rating added")
+            .addOnSuccessListener(requireActivity()) {
+                Log.d(TAG, "Rating added")
 
-                    // Hide keyboard and scroll to top
-                    hideKeyboard()
-                    binding.recyclerRatings.smoothScrollToPosition(0)
-                }
-                .addOnFailureListener(requireActivity()) { e ->
-                    Log.w(TAG, "Add rating failed", e)
+                // Hide keyboard and scroll to top
+                hideKeyboard()
+                binding.recyclerRatings.smoothScrollToPosition(0)
+            }
+            .addOnFailureListener(requireActivity()) { e ->
+                Log.w(TAG, "Add rating failed", e)
 
-                    // Show failure message and hide keyboard
-                    hideKeyboard()
-                    Snackbar.make(
-                        requireView().findViewById(android.R.id.content), "Failed to add rating",
-                            Snackbar.LENGTH_SHORT).show()
-                }
+                // Show failure message and hide keyboard
+                hideKeyboard()
+                Snackbar.make(
+                    requireView().findViewById(android.R.id.content), "Failed to add rating",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
     }
 
     private fun addRating(localRef: DocumentReference, rating: Rating): Task<Void> {
@@ -201,7 +207,7 @@ class LocalDetailFragment : Fragment(),
         val view = requireActivity().currentFocus
         if (view != null) {
             (requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
-                    .hideSoftInputFromWindow(view.windowToken, 0)
+                .hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 
